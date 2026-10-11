@@ -1,5 +1,13 @@
 # Insurance Agency Microservices - Bài thực hành 4
 
+## Thông tin sinh viên
+
+- Họ và tên: Huỳnh Xuân Nhã
+- Mã số sinh viên: 2224801030048
+- Lớp: D22KTPM03
+- Email sinh viên: 2224801030048@student.tdmu.edu.vn
+- GitHub: XuanNha204
+
 Solution .NET 8 cho case study đại lý bảo hiểm, được tổ chức theo ba project cho mỗi microservice:
 
 - `<Service>.Api`: command, query, event và DTO công khai.
