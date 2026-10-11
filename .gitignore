@@ -1,0 +1,17 @@
+.vs/
+.idea/
+**/bin/
+**/obj/
+**/node_modules/
+**/dist/
+TestResults/
+tmp/
+input/
+output/
+BAO_CAO_THUC_HANH_4.md
+scripts/create-build-evidence.ps1
+scripts/create-submission-package.ps1
+*.user
+*.suo
+*.log
+Web/.env.local

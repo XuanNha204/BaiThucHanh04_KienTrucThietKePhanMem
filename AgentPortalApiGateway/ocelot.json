@@ -1,0 +1,78 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/Products/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5030 }],
+      "UpstreamPathTemplate": "/api/Products/{everything}",
+      "UpstreamHttpMethod": ["Get"],
+      "AuthenticationOptions": { "AuthenticationProviderKey": "ApiSecurity", "AllowedScopes": [] },
+      "RouteClaimsRequirement": { "userType": "SALESMAN" }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Products",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5030 }],
+      "UpstreamPathTemplate": "/api/Products",
+      "UpstreamHttpMethod": ["Get"],
+      "AuthenticationOptions": { "AuthenticationProviderKey": "ApiSecurity", "AllowedScopes": [] },
+      "RouteClaimsRequirement": { "userType": "SALESMAN" }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Dashboard/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5035 }],
+      "UpstreamPathTemplate": "/api/Dashboard/{everything}",
+      "UpstreamHttpMethod": ["Post"],
+      "AuthenticationOptions": { "AuthenticationProviderKey": "ApiSecurity", "AllowedScopes": [] },
+      "RouteClaimsRequirement": { "userType": "SALESMAN" }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Offers",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5050 }],
+      "UpstreamPathTemplate": "/api/Offers",
+      "UpstreamHttpMethod": ["Post"],
+      "AuthenticationOptions": { "AuthenticationProviderKey": "ApiSecurity", "AllowedScopes": [] },
+      "RouteClaimsRequirement": { "userType": "SALESMAN" },
+      "AddHeadersToRequest": { "AgentLogin": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value[0] > |" }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Policies",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5050 }],
+      "UpstreamPathTemplate": "/api/Policies",
+      "UpstreamHttpMethod": ["Post"],
+      "AuthenticationOptions": { "AuthenticationProviderKey": "ApiSecurity", "AllowedScopes": [] },
+      "RouteClaimsRequirement": { "userType": "SALESMAN" }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Policies/{number}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5050 }],
+      "UpstreamPathTemplate": "/api/Policies/{number}",
+      "UpstreamHttpMethod": ["Get"],
+      "AuthenticationOptions": { "AuthenticationProviderKey": "ApiSecurity", "AllowedScopes": [] },
+      "RouteClaimsRequirement": { "userType": "SALESMAN" }
+    },
+    {
+      "DownstreamPathTemplate": "/api/PolicySearch",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5065 }],
+      "UpstreamPathTemplate": "/api/PolicySearch",
+      "UpstreamHttpMethod": ["Get"],
+      "AuthenticationOptions": { "AuthenticationProviderKey": "ApiSecurity", "AllowedScopes": [] },
+      "RouteClaimsRequirement": { "userType": "SALESMAN" }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Documents/{number}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5075 }],
+      "UpstreamPathTemplate": "/api/Documents/{number}",
+      "UpstreamHttpMethod": ["Get"],
+      "AuthenticationOptions": { "AuthenticationProviderKey": "ApiSecurity", "AllowedScopes": [] },
+      "RouteClaimsRequirement": { "userType": "SALESMAN" }
+    }
+  ],
+  "GlobalConfiguration": { "RequestIdKey": "OcRequestId" }
+}

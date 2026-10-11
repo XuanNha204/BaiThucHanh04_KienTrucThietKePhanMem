@@ -1,0 +1,117 @@
+name: insurance-agency-app
+
+x-dotnet-service: &dotnet-service
+  restart: unless-stopped
+  networks: [insurance-net]
+
+services:
+  agent-portal-gateway:
+    <<: *dotnet-service
+    build:
+      context: ..
+      dockerfile: AgentPortalApiGateway/Dockerfile
+    image: insurance/agent-portal-gateway:dev
+    container_name: agent-portal-gateway
+    environment:
+      ASPNETCORE_ENVIRONMENT: docker
+    ports: ["8099:8099"]
+    depends_on:
+      product-service: { condition: service_healthy }
+      policy-service: { condition: service_healthy }
+      policy-search-service: { condition: service_healthy }
+      dashboard-service: { condition: service_healthy }
+
+  auth-service:
+    <<: *dotnet-service
+    build: { context: .., dockerfile: AuthService/Dockerfile }
+    image: insurance/auth-service:dev
+    container_name: auth-service
+    ports: ["6060:6060"]
+    healthcheck: { test: ["CMD", "curl", "-f", "http://localhost:6060/health"], interval: 10s, timeout: 3s, retries: 10 }
+
+  chat-service:
+    <<: *dotnet-service
+    build: { context: .., dockerfile: ChatService/Dockerfile }
+    image: insurance/chat-service:dev
+    container_name: chat-service
+    ports: ["4099:4099"]
+    healthcheck: { test: ["CMD", "curl", "-f", "http://localhost:4099/health"], interval: 10s, timeout: 3s, retries: 10 }
+
+  product-service:
+    <<: *dotnet-service
+    build: { context: .., dockerfile: ProductService/Dockerfile }
+    image: insurance/product-service:dev
+    container_name: product-service
+    ports: ["5030:5030"]
+    healthcheck: { test: ["CMD", "curl", "-f", "http://localhost:5030/health"], interval: 10s, timeout: 3s, retries: 10 }
+
+  dashboard-service:
+    <<: *dotnet-service
+    build: { context: .., dockerfile: DashboardService/Dockerfile }
+    image: insurance/dashboard-service:dev
+    container_name: dashboard-service
+    ports: ["5035:5035"]
+    healthcheck: { test: ["CMD", "curl", "-f", "http://localhost:5035/health"], interval: 10s, timeout: 3s, retries: 10 }
+
+  pricing-service:
+    <<: *dotnet-service
+    build: { context: .., dockerfile: PricingService/Dockerfile }
+    image: insurance/pricing-service:dev
+    container_name: pricing-service
+    ports: ["5040:5040"]
+    healthcheck: { test: ["CMD", "curl", "-f", "http://localhost:5040/health"], interval: 10s, timeout: 3s, retries: 10 }
+
+  policy-service:
+    <<: *dotnet-service
+    build: { context: .., dockerfile: PolicyService/Dockerfile }
+    image: insurance/policy-service:dev
+    container_name: policy-service
+    ports: ["5050:5050"]
+    healthcheck: { test: ["CMD", "curl", "-f", "http://localhost:5050/health"], interval: 10s, timeout: 3s, retries: 10 }
+
+  policy-search-service:
+    <<: *dotnet-service
+    build: { context: .., dockerfile: PolicySearchService/Dockerfile }
+    image: insurance/policy-search-service:dev
+    container_name: policy-search-service
+    ports: ["5065:5065"]
+    healthcheck: { test: ["CMD", "curl", "-f", "http://localhost:5065/health"], interval: 10s, timeout: 3s, retries: 10 }
+
+  payment-service:
+    <<: *dotnet-service
+    build: { context: .., dockerfile: PaymentService/Dockerfile }
+    image: insurance/payment-service:dev
+    container_name: payment-service
+    ports: ["5070:5070"]
+    healthcheck: { test: ["CMD", "curl", "-f", "http://localhost:5070/health"], interval: 10s, timeout: 3s, retries: 10 }
+
+  document-service:
+    <<: *dotnet-service
+    build: { context: .., dockerfile: DocumentService/Dockerfile }
+    image: insurance/document-service:dev
+    container_name: document-service
+    ports: ["5075:5075"]
+    healthcheck: { test: ["CMD", "curl", "-f", "http://localhost:5075/health"], interval: 10s, timeout: 3s, retries: 10 }
+
+  web-vue:
+    restart: unless-stopped
+    networks: [insurance-net]
+    build: ../Web
+    image: insurance/web-vue:dev
+    container_name: web-vue
+    ports: ["8080:80"]
+
+  blazor-client:
+    restart: unless-stopped
+    networks: [insurance-net]
+    build:
+      context: ..
+      dockerfile: BlazorWasmClient/Dockerfile
+    image: insurance/blazor-client:dev
+    container_name: blazor-client
+    ports: ["5081:80"]
+
+networks:
+  insurance-net:
+    name: insurance-net
+    external: true
