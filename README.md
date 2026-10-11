@@ -43,5 +43,3 @@ Các địa chỉ chính:
 ```powershell
 .\scripts\backup-databases.ps1
 ```
-
-Các file backup custom-format được tạo trong `output/database`.
